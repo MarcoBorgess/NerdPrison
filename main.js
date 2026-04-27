@@ -109,8 +109,8 @@ function renderBrainrotTable(wrapperId, data, state, currency) {
     { key: 'name',        label: 'Nome'     },
     { key: 'rarity',      label: 'Raridade' },
     { key: 'valuePerSec', label: isRubi ? 'Rubi/s' : 'Coins/s', num: true },
-    { key: 'buyValue',    label: 'Buy Value', num: true },
-    { key: '_be',         label: 'Break/Even', tooltip: BE_TOOLTIP, num: true },
+    { key: 'buyValue',    label: 'Custo', num: true },
+    { key: '_be',         label: 'Tempo para se pagar', tooltip: BE_TOOLTIP, num: true },
   ];
 
   const sorted = sortBrainrots(data, state.col, state.asc);
