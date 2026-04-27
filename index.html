@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRISION - Nerdzone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav id="main-nav">
+    <button class="nav-btn active" data-view="brainrots">
+      <img src="assets/items/zombie_head.png" alt="" class="mc-icon">
+      <span>Brainrots</span>
+    </button>
+    <button class="nav-btn" data-view="rebirths">
+      <img src="assets/items/nether_star.png" alt="" class="mc-icon">
+      <span>Rebirths</span>
+    </button>
+    <button class="nav-btn" data-view="porretes">
+      <img src="assets/items/netherite_sword.png" alt="" class="mc-icon">
+      <span>Porretes</span>
+    </button>
+  </nav>
+
+  <div class="content">
+
+    <section id="view-brainrots" class="view active">
+      <header><h1>Brainrots</h1></header>
+      <h2>Brainrots de Coins</h2>
+      <div id="coins-table-wrap"></div>
+      <h2 style="color:#FF5555;border-bottom-color:#FF5555">Brainrots de Rubi</h2>
+      <div id="rubi-table-wrap"></div>
+    </section>
+
+    <section id="view-rebirths" class="view">
+      <header><h1>Rebirths</h1></header>
+      <div id="rebirths-table-wrap"></div>
+    </section>
+
+    <section id="view-porretes" class="view">
+      <header><h1>Porretes</h1></header>
+      <div id="porretes-table-wrap"></div>
+    </section>
+
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

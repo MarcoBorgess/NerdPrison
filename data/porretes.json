@@ -1,0 +1,18 @@
+[
+  {"level": 1,  "name": "Porrete de Madeira",   "icon": "stick",            "mob": "Lhama",            "hp": 30,   "damage": 5,   "level1Equivalents": 1},
+  {"level": 2,  "name": "Porrete de Osso",      "icon": "bone",             "mob": "Camelo",           "hp": 45,   "damage": 7,   "level1Equivalents": 3},
+  {"level": 3,  "name": "Porrete de Ouro",      "icon": "blaze_rod",        "mob": "Sniffer",          "hp": 70,   "damage": 10,  "level1Equivalents": 9},
+  {"level": 4,  "name": "Porrete do Breeze",    "icon": "breeze_rod",       "mob": "Panda",            "hp": 110,  "damage": 12,  "level1Equivalents": 27},
+  {"level": 5,  "name": "Machado de Madeira",   "icon": "wooden_axe",       "mob": "Bode",             "hp": 160,  "damage": 14,  "level1Equivalents": 81},
+  {"level": 6,  "name": "Machado de Pedra",     "icon": "stone_axe",        "mob": "Urso Polar",       "hp": 230,  "damage": 18,  "level1Equivalents": 243},
+  {"level": 7,  "name": "Machado de Ouro",      "icon": "golden_axe",       "mob": "Breeze",           "hp": 320,  "damage": 22,  "level1Equivalents": 729},
+  {"level": 8,  "name": "Machado de Diamante",  "icon": "diamond_axe",      "mob": "Bogged",           "hp": 420,  "damage": 30,  "level1Equivalents": 2187},
+  {"level": 9,  "name": "Machado de Netherite", "icon": "netherite_axe",    "mob": "Ravager",          "hp": 550,  "damage": 40,  "level1Equivalents": 6561},
+  {"level": 10, "name": "Quebra-Ossos",         "icon": "netherite_shovel", "mob": "Armadillo",        "hp": 650,  "damage": 60,  "level1Equivalents": 19683},
+  {"level": 11, "name": "Abatedor",             "icon": "netherite_hoe",    "mob": "Tartaruga Anciã",  "hp": 720,  "damage": 75,  "level1Equivalents": 59049},
+  {"level": 12, "name": "Pá de Ferro",          "icon": "iron_shovel",      "mob": "Raposa",           "hp": 800,  "damage": 95,  "level1Equivalents": 177147},
+  {"level": 13, "name": "Pá de Ouro",           "icon": "golden_shovel",    "mob": "Golfinho",         "hp": 820,  "damage": 105, "level1Equivalents": 531441},
+  {"level": 14, "name": "Pá de Diamante",       "icon": "diamond_shovel",   "mob": "Cavalo de Guerra", "hp": 900,  "damage": 125, "level1Equivalents": 1594323},
+  {"level": 15, "name": "Lâmina do Abismo",     "icon": "netherite_sword",  "mob": null,               "hp": null, "damage": null,"level1Equivalents": 4782969},
+  {"level": 16, "name": "Mangual do Warden",    "icon": "mace",             "mob": null,               "hp": null, "damage": null,"level1Equivalents": 14348907}
+]

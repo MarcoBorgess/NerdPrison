@@ -1,0 +1,241 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0f0f13;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 0;
+  scrollbar-width: none;
+}
+body::-webkit-scrollbar { display: none; }
+
+/* ── Nav ── */
+#main-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #16161e;
+  border-bottom: 1px solid #2a2a3a;
+  padding: 10px 24px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.nav-btn:hover  { border-color: #555; }
+.nav-btn.active { border-color: #3a9bd5; }
+.nav-btn .mc-icon { width: 20px; height: 20px; image-rendering: pixelated; }
+
+/* ── Layout ── */
+.content { padding: 24px 24px 0; }
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── Page header ── */
+header { margin-bottom: 20px; }
+
+h1 {
+  font-size: 1.6rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ── Section headings ── */
+h2 {
+  font-size: 1rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid #222;
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+/* ── Card ── */
+.brainrots-card {
+  background: #16161e;
+  border: 1px solid #2a2a3a;
+  border-radius: 14px;
+  overflow: clip;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  margin-bottom: 28px;
+}
+
+/* ── Tables (general) ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead th {
+  position: sticky;
+  top: 54px;
+  z-index: 2;
+  background: #16161e;
+  text-align: left;
+  color: #666;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 12px 16px 9px;
+  border-bottom: 1px solid #2a2a3a;
+  user-select: none;
+  white-space: nowrap;
+}
+thead th.sortable { cursor: pointer; }
+thead th.sortable:hover { color: #aaa; }
+thead th.sorted { color: #e0e0e0; }
+
+tbody td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #1e1e2e;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: #1a1a26; }
+
+/* ── Brainrot table: fixed layout for column alignment ── */
+.brainrot-table { table-layout: fixed; }
+
+.brainrot-table .col-name   { width: 38%; }
+.brainrot-table .col-rarity { width: 13%; }
+.brainrot-table .col-vps    { width: 12%; }
+.brainrot-table .col-buy    { width: 13%; }
+.brainrot-table .col-be     { width: 24%; }
+
+/* Name cell: allow text to truncate cleanly */
+.td-name { display: flex; align-items: center; gap: 0; overflow: hidden; }
+.brainrot-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── Value colors ── */
+.coin-val  { color: #3a9bd5; }
+.token-val { color: #f0c040; }
+.rubi-val  { color: #FF5555; }
+.green-val      { color: #2ecc71; }
+.dark-green-val { color: #1a8a4a; }
+.muted-val { color: #aaa; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+thead th.num { text-align: right; }
+
+/* ── Rarity pills ── */
+.rarity-pill {
+  display: inline-block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  padding: 2px 8px;
+  font-weight: 600;
+}
+
+/* ── Mob face portrait (brainrots) ── */
+.row-icon {
+  width: 22px;
+  height: 22px;
+  image-rendering: pixelated;
+  vertical-align: middle;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+/* ── Item icon (porretes, nav) ── */
+.item-icon {
+  width: 28px;
+  height: 28px;
+  image-rendering: pixelated;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/* ── Porretes HP tag ── */
+.hp-tag   { color: #2ecc71; font-size: 0.8rem; }
+.hits-tag { color: #e67e22; font-size: 0.8rem; }
+
+/* ── Rebirths: multi-line brainrots cell ── */
+td.brainrots-needed {
+  font-size: 0.8rem;
+  color: #aaa;
+  white-space: pre-line;
+  overflow: visible;
+  line-height: 1.6;
+}
+
+/* ── Sort arrow ── */
+.sort-arrow { color: #3a9bd5; margin-left: 4px; font-size: 0.7rem; }
+
+/* ── Break/Even info tooltip ── */
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #2a2a3a;
+  color: #666;
+  font-size: 0.6rem;
+  font-style: italic;
+  font-weight: 700;
+  cursor: help;
+  position: relative;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.info-icon::after {
+  content: attr(data-tip);
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  color: #aaa;
+  white-space: nowrap;
+  z-index: 50;
+  pointer-events: none;
+  font-style: normal;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.info-icon:hover::after { display: block; }
+
+/* ── Unknown brainrot row ── */
+.unknown { opacity: 0.4; font-style: italic; }
+.mob-unknown {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: #555;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
