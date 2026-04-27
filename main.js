@@ -252,11 +252,11 @@ async function init() {
   const tipBtn   = document.getElementById('tip-btn');
   const closeBtn = document.getElementById('tip-close');
 
-  tipBtn.addEventListener('click', () => modal.classList.remove('hidden'));
-  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+  tipBtn.addEventListener('click', () => modal.classList.add('open'));
+  closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.add('hidden'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.remove('open'); });
 
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {

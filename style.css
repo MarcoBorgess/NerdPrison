@@ -230,17 +230,16 @@ td.brainrots-needed {
 .burguer-btn { margin-left: 12px; }
 
 /* ── Modal ── */
-.hidden { display: none !important; }
-
 .modal-overlay {
+  display: none;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
   z-index: 200;
-  display: flex;
   align-items: center;
   justify-content: center;
 }
+.modal-overlay.open { display: flex; }
 
 .modal-box {
   background: #16161e;
