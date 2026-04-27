@@ -270,4 +270,26 @@ async function init() {
   });
 }
 
+// Floating tooltip — escapes overflow:hidden containers
+const _floatingTip = document.createElement('div');
+_floatingTip.id = 'floating-tip';
+document.body.appendChild(_floatingTip);
+
+document.addEventListener('mouseover', e => {
+  const icon = e.target.closest('.info-icon');
+  if (!icon) return;
+  _floatingTip.textContent = icon.dataset.tip;
+  _floatingTip.style.display = 'block';
+  const r = icon.getBoundingClientRect();
+  let left = r.left + r.width / 2 - _floatingTip.offsetWidth / 2;
+  left = Math.min(left, window.innerWidth - _floatingTip.offsetWidth - 8);
+  left = Math.max(left, 8);
+  _floatingTip.style.left = left + 'px';
+  _floatingTip.style.top  = (r.bottom + 6) + 'px';
+});
+
+document.addEventListener('mouseout', e => {
+  if (e.target.closest('.info-icon')) _floatingTip.style.display = 'none';
+});
+
 init();
