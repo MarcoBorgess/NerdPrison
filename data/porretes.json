@@ -13,6 +13,6 @@
   {"level": 12, "name": "Pá de Ferro",          "icon": "iron_shovel",      "mob": "Raposa",           "hp": 800,  "damage": 95,  "level1Equivalents": 177147},
   {"level": 13, "name": "Pá de Ouro",           "icon": "golden_shovel",    "mob": "Golfinho",         "hp": 820,  "damage": 105, "level1Equivalents": 531441},
   {"level": 14, "name": "Pá de Diamante",       "icon": "diamond_shovel",   "mob": "Cavalo de Guerra", "hp": 900,  "damage": 125, "level1Equivalents": 1594323},
-  {"level": 15, "name": "Lâmina do Abismo",     "icon": "netherite_sword",  "mob": null,               "hp": null, "damage": null,"level1Equivalents": 4782969},
-  {"level": 16, "name": "Mangual do Warden",    "icon": "mace",             "mob": null,               "hp": null, "damage": null,"level1Equivalents": 14348907}
+  {"level": 15, "name": "Lâmina do Abismo",     "icon": "netherite_sword",  "mob": "Golem de Ferro",   "hp": null, "damage": 160, "level1Equivalents": 4782969},
+  {"level": 16, "name": "Mangual do Warden",    "icon": "mace",             "mob": "Defensor",         "hp": null, "damage": 220, "level1Equivalents": 14348907}
 ]

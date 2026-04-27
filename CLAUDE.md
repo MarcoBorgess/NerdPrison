@@ -1,7 +1,7 @@
 # Idea
 
   Static page (HTML + vanilla JS) that displays a player's Minecraft prison server progress.
-  Site title: "PRISION - Nerdzone" (used in <title> and h1)
+  Site title: "PRISON - Nerdzone" (used in <title> and h1)
 
 
   ## Purpose

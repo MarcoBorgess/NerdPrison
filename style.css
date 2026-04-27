@@ -227,7 +227,7 @@ td.brainrots-needed {
 .info-icon:hover::after { display: block; }
 
 /* ── Burger button (no gap on right side of nav) ── */
-.burguer-btn { margin-left: 12px; }
+.burger-btn { margin-left: 12px; }
 
 /* ── Modal ── */
 .modal-overlay {
