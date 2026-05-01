@@ -21,7 +21,10 @@
       <img src="assets/items/netherite_sword.png" alt="" class="mc-icon">
       <span>Porretes</span>
     </button>
-    <button class="nav-btn burger-btn" id="tip-btn">
+    <button class="nav-btn burger-btn" data-view="meus-brainrots">
+      <img src="assets/computer.webp" alt="" class="mc-icon">
+    </button>
+    <button class="nav-btn" id="tip-btn">
       <img src="assets/burger.webp" alt="" class="mc-icon">
     </button>
   </nav>
@@ -46,6 +49,44 @@
       <div id="porretes-table-wrap"></div>
     </section>
 
+    <section id="view-meus-brainrots" class="view">
+      <header class="mb-header">
+        <h1>Meus Brainrots</h1>
+        <button class="btn-config" id="mb-config-btn">
+          <img src="https://mc.nerothe.com/img/1.20.1/writable_book.png" alt="">
+          Configurar
+        </button>
+      </header>
+      <div class="mb-cards" id="mb-cards"></div>
+      <div class="brainrots-card">
+        <div class="table-scroll">
+          <table class="mb-table">
+            <thead>
+              <tr>
+                <th>Brainrot</th>
+                <th class="num">Qtd</th>
+                <th class="num">Custo</th>
+                <th class="num">AFK /s</th>
+                <th class="num">Evento /s</th>
+                <th class="num">AFK /m</th>
+                <th class="num">Evento /m</th>
+                <th class="num">AFK /h</th>
+                <th class="num">Evento /h</th>
+                <th class="num">AFK /d</th>
+                <th class="num">Evento /d</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="mb-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="add-form">
+        <select id="mb-add-select"></select>
+        <button class="btn-save-rank" id="mb-add-btn">Adicionar</button>
+      </div>
+    </section>
+
   </div>
 
   <!-- Tip modal -->
@@ -65,6 +106,36 @@
         <button class="copy-btn" data-copy="/tokens pay parmegio ">⧉</button>
       </div>
       <p class="modal-footer">Me mande sugestões no discord! @maarco</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="mb-modal">
+    <div class="modal-box">
+      <div class="modal-title">
+        <span>Configurar</span>
+        <button class="modal-close" id="mb-modal-close">✕</button>
+      </div>
+      <div class="mb-modal-fields">
+        <div class="mb-modal-field">
+          <label>VIP</label>
+          <select id="mb-vip">
+            <option value="none">Sem VIP</option>
+            <option value="ouro">VIP Ouro</option>
+            <option value="diamante">VIP Diamante</option>
+            <option value="obsidian">VIP Obsidian</option>
+            <option value="esmeralda">VIP Esmeralda</option>
+          </select>
+        </div>
+        <div class="mb-modal-field">
+          <label>Booster</label>
+          <input type="number" id="mb-booster" min="1" step="0.01" value="3.50">
+        </div>
+        <div class="mb-modal-field">
+          <label>Multi Evento</label>
+          <input type="number" id="mb-event-multi" min="1" step="0.01" value="3.50">
+        </div>
+      </div>
+      <button class="btn-save-rank" id="mb-modal-save">Salvar</button>
     </div>
   </div>
 

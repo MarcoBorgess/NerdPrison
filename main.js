@@ -30,6 +30,17 @@ function fmt(n) {
   return String(n);
 }
 
+function fmt2(n) {
+  if (n == null || n === 0) return '0';
+  const a = Math.abs(n);
+  if (a >= 1e15) return (n / 1e15).toFixed(2).replace(/\.00$/, '') + 'Q';
+  if (a >= 1e12) return (n / 1e12).toFixed(2).replace(/\.00$/, '') + 'T';
+  if (a >= 1e9)  return (n / 1e9).toFixed(2).replace(/\.00$/, '')  + 'B';
+  if (a >= 1e6)  return (n / 1e6).toFixed(2).replace(/\.00$/, '')  + 'M';
+  if (a >= 1e3)  return (n / 1e3).toFixed(2).replace(/\.00$/, '')  + 'K';
+  return String(n);
+}
+
 function fmtTime(secs) {
   if (!secs || secs <= 0) return '—';
   const totalMin   = Math.floor(secs / 60);
@@ -229,6 +240,291 @@ function switchView(view) {
   window.scrollTo(0, 0);
 }
 
+// ── Meus Brainrots ──────────────────────────────────────────────────────────
+
+const VIP_DATA = {
+  none:      { bonus: 1.00, afkDebuff: 0.75, label: 'Sem VIP' },
+  ouro:      { bonus: 1.05, afkDebuff: 0.77, label: 'VIP Ouro' },
+  diamante:  { bonus: 1.10, afkDebuff: 0.80, label: 'VIP Diamante' },
+  obsidian:  { bonus: 1.20, afkDebuff: 0.82, label: 'VIP Obsidian' },
+  esmeralda: { bonus: 1.40, afkDebuff: 0.84, label: 'VIP Esmeralda' },
+};
+
+const MB_LS = { REBIRTH: 'mb_rebirth', CONFIG: 'mb_config', LOADOUT: 'mb_loadout' };
+
+function mbLoad(key, def) {
+  try { const v = localStorage.getItem(key); return v !== null ? JSON.parse(v) : def; } catch { return def; }
+}
+function mbSave(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+
+let _mbBrainrots = [];
+let _mbRebirths  = [];
+let _mbLevel     = 0;
+let _mbConfig    = { vip: 'none', booster: 3.50, eventMulti: 3.50 };
+let _mbLoadout   = [];
+
+function _mbVip()     { return VIP_DATA[_mbConfig.vip] || VIP_DATA.none; }
+function _mbBooster() { return parseFloat(_mbConfig.booster) || 1; }
+function _mbEvent()   { return parseFloat(_mbConfig.eventMulti) || 1; }
+function _mbRebirth() { return _mbRebirths.find(r => r.level === _mbLevel) || null; }
+function _mbCoinsMulti() { const r = _mbRebirth(); return r ? r.coinsMultiplier : 1; }
+
+function _mbTotals() {
+  const vip = _mbVip(), bst = _mbBooster(), evt = _mbEvent(), cm = _mbCoinsMulti();
+  const map = Object.fromEntries(_mbBrainrots.map(b => [b.name, b]));
+  let afk = 0, world = 0, event = 0;
+  for (const e of _mbLoadout) {
+    const b = map[e.name];
+    if (!b || b.currency === 'rubi') continue;
+    const cps = b.valuePerSec || 0;
+    afk   += cps * cm * vip.bonus * vip.afkDebuff * e.qty;
+    world += cps * cm * vip.bonus * bst * e.qty;
+    event += cps * cm * vip.bonus * bst * evt * e.qty;
+  }
+  return { afk, world, event };
+}
+
+function mbRenderCards() {
+  const c = document.getElementById('mb-cards');
+  const vip = _mbVip(), bst = _mbBooster(), evt = _mbEvent();
+  const level = _mbLevel;
+  const cur  = _mbRebirth();
+  const next = _mbRebirths.find(r => r.level === level + 1) || null;
+  const { afk, world, event } = _mbTotals();
+
+  // Card 1: current rebirth
+  const multiHtml = cur
+    ? `<span>Coins <strong>${cur.coinsMultiplier}x</strong></span><span>Tokens <strong>${cur.tokensMultiplier}x</strong></span>`
+    : `<span style="color:#555">Sem multiplicador</span>`;
+
+  // Card 2: next rebirth (hidden at max)
+  let card2 = '';
+  if (next) {
+    const total    = next.cost + next.costOfNeededBrainrots;
+    const timeStr  = afk > 0 ? fmtTime(total / afk) : '—';
+    card2 = `<div class="mb-card">
+      <div class="mb-card-label">Próximo Rebirth (${next.level})</div>
+      <div class="mb-next-cost">Custo: <strong>${fmt2(total)}</strong> <span class="mb-cost-detail">(${fmt2(next.cost)} + ${fmt2(next.costOfNeededBrainrots)})</span></div>
+      <div class="mb-next-brainrots">${next.neededBrainrots}</div>
+      <div class="mb-next-afk">Tempo AFK: <strong>${timeStr}</strong></div>
+    </div>`;
+  }
+
+  c.innerHTML = `
+    <div class="mb-card mb-card-rebirth">
+      <div class="mb-card-label">Rebirth Atual</div>
+      <div class="mb-rebirth-level">${level}</div>
+      <div class="mb-rebirth-multi">${multiHtml}</div>
+      <div class="mb-step-btns">
+        <button class="rebirth-step-btn" id="mb-dec">−</button>
+        <button class="rebirth-step-btn" id="mb-inc">+</button>
+      </div>
+    </div>
+    ${card2}
+    <div class="mb-card">
+      <div class="mb-card-title">AFK <span class="mb-multi-hint">· ${vip.label}</span></div>
+      <div class="mb-gen-rows">
+        <div class="mb-gen-row"><span>/ s</span><strong class="val-afk">${fmt2(afk)}</strong></div>
+        <div class="mb-gen-row"><span>/ m</span><strong class="val-afk">${fmt2(afk * 60)}</strong></div>
+        <div class="mb-gen-row"><span>/ h</span><strong class="val-afk">${fmt2(afk * 3600)}</strong></div>
+        <div class="mb-gen-row"><span>/ d</span><strong class="val-afk">${fmt2(afk * 86400)}</strong></div>
+      </div>
+    </div>
+    <div class="mb-card">
+      <div class="mb-card-title">Mundo <span class="mb-multi-hint">· ${bst}x</span></div>
+      <div class="mb-gen-rows">
+        <div class="mb-gen-row"><span>/ s</span><strong class="val-afk">${fmt2(world)}</strong></div>
+        <div class="mb-gen-row"><span>/ m</span><strong class="val-afk">${fmt2(world * 60)}</strong></div>
+        <div class="mb-gen-row"><span>/ h</span><strong class="val-afk">${fmt2(world * 3600)}</strong></div>
+        <div class="mb-gen-row"><span>/ d</span><strong class="val-afk">${fmt2(world * 86400)}</strong></div>
+      </div>
+    </div>
+    <div class="mb-card">
+      <div class="mb-card-title">Evento <span class="mb-multi-hint">· ${bst}x · ${evt}x</span></div>
+      <div class="mb-gen-rows">
+        <div class="mb-gen-row"><span>/ s</span><strong class="val-event">${fmt2(event)}</strong></div>
+        <div class="mb-gen-row"><span>/ m</span><strong class="val-event">${fmt2(event * 60)}</strong></div>
+        <div class="mb-gen-row"><span>/ h</span><strong class="val-event">${fmt2(event * 3600)}</strong></div>
+        <div class="mb-gen-row"><span>/ d</span><strong class="val-event">${fmt2(event * 86400)}</strong></div>
+      </div>
+    </div>`;
+
+  document.getElementById('mb-dec').addEventListener('click', () => {
+    _mbLevel = Math.max(0, _mbLevel - 1);
+    mbSave(MB_LS.REBIRTH, _mbLevel);
+    mbRenderCards();
+  });
+  document.getElementById('mb-inc').addEventListener('click', () => {
+    _mbLevel = Math.min(20, _mbLevel + 1);
+    mbSave(MB_LS.REBIRTH, _mbLevel);
+    mbRenderCards();
+  });
+}
+
+function mbRenderTable() {
+  const tbody = document.getElementById('mb-tbody');
+  const vip = _mbVip(), bst = _mbBooster(), evt = _mbEvent(), cm = _mbCoinsMulti();
+  const map = Object.fromEntries(_mbBrainrots.map(b => [b.name, b]));
+
+  if (_mbLoadout.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="12" style="color:#555;text-align:center;padding:20px;">Nenhum brainrot adicionado.</td></tr>`;
+    return;
+  }
+
+  const sorted = [..._mbLoadout].sort((a, b) =>
+    (map[b.name]?.valuePerSec || 0) - (map[a.name]?.valuePerSec || 0)
+  );
+
+  let html = '';
+  for (const e of sorted) {
+    const b = map[e.name];
+    if (!b) continue;
+    const cps   = b.valuePerSec || 0;
+    const qty   = e.qty;
+    const afkPs = cps * cm * vip.bonus * vip.afkDebuff * qty;
+    const evtPs = cps * cm * vip.bonus * bst * evt * qty;
+    const color = RARITY_COLORS[b.rarity] || '#e0e0e0';
+    const idx   = _mbLoadout.indexOf(e);
+    html += `<tr data-idx="${idx}">
+      <td><div class="td-name-flex">${mobFace(b.icon)}<span class="brainrot-name" style="color:${color};font-weight:700">${b.name}</span></div></td>
+      <td class="num qty-cell">
+        <span class="qty-display">${qty}</span>
+        <span class="qty-form hidden">
+          <input type="number" class="qty-input" value="${qty}" min="1">
+          <button class="qty-confirm">✓</button>
+        </span>
+      </td>
+      <td class="num green-val">${fmt2(b.buyValue * qty)}</td>
+      <td class="num val-afk">${fmt2(afkPs)}</td>
+      <td class="num val-event">${fmt2(evtPs)}</td>
+      <td class="num val-afk">${fmt2(afkPs * 60)}</td>
+      <td class="num val-event">${fmt2(evtPs * 60)}</td>
+      <td class="num val-afk">${fmt2(afkPs * 3600)}</td>
+      <td class="num val-event">${fmt2(evtPs * 3600)}</td>
+      <td class="num val-afk">${fmt2(afkPs * 86400)}</td>
+      <td class="num val-event">${fmt2(evtPs * 86400)}</td>
+      <td><button class="btn-remove">×</button></td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+
+  tbody.querySelectorAll('.qty-display').forEach(span => {
+    span.addEventListener('click', () => {
+      span.classList.add('hidden');
+      const form = span.nextElementSibling;
+      form.classList.remove('hidden');
+      const inp = form.querySelector('.qty-input');
+      inp.focus();
+      inp.select();
+    });
+  });
+
+  function confirmQty(btn) {
+    const row = btn.closest('tr');
+    const idx = parseInt(row.dataset.idx);
+    const inp = btn.closest('.qty-form').querySelector('.qty-input');
+    const val = parseInt(inp.value);
+    if (!isNaN(val) && val >= 1) {
+      _mbLoadout[idx].qty = val;
+      mbSave(MB_LS.LOADOUT, _mbLoadout);
+      mbRenderTable();
+      mbRenderCards();
+    }
+  }
+
+  tbody.querySelectorAll('.qty-confirm').forEach(btn => {
+    btn.addEventListener('click', () => confirmQty(btn));
+  });
+
+  tbody.querySelectorAll('.qty-input').forEach(inp => {
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') confirmQty(inp.nextElementSibling);
+    });
+  });
+
+  tbody.querySelectorAll('.btn-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.closest('tr').dataset.idx);
+      _mbLoadout.splice(idx, 1);
+      mbSave(MB_LS.LOADOUT, _mbLoadout);
+      mbRenderTable();
+      mbRenderCards();
+    });
+  });
+}
+
+function mbRenderAddSelect() {
+  const sel = document.getElementById('mb-add-select');
+  const coins = _mbBrainrots.filter(b => b.currency !== 'rubi');
+  const rarities = ['Mítico', 'Lendário', 'Raro', 'Incomum', 'Comum'];
+  sel.innerHTML = rarities.map(rarity => {
+    const group = coins
+      .filter(b => b.rarity === rarity)
+      .sort((a, b) => (b.valuePerSec || 0) - (a.valuePerSec || 0));
+    if (group.length === 0) return '';
+    return `<optgroup label="${rarity}">${
+      group.map(b => `<option value="${b.name}">${b.name} (${b.mob})</option>`).join('')
+    }</optgroup>`;
+  }).join('');
+}
+
+function initMeusbrainrots(brainrots, rebirths) {
+  _mbBrainrots = brainrots;
+  _mbRebirths  = rebirths;
+  _mbLevel     = mbLoad(MB_LS.REBIRTH, 0);
+  _mbConfig    = mbLoad(MB_LS.CONFIG, { vip: 'none', booster: 3.50, eventMulti: 3.50 });
+  _mbLoadout   = mbLoad(MB_LS.LOADOUT, []);
+
+  mbRenderCards();
+  mbRenderTable();
+  mbRenderAddSelect();
+
+  // Add button
+  document.getElementById('mb-add-btn').addEventListener('click', () => {
+    const name = document.getElementById('mb-add-select').value;
+    if (!name) return;
+    const existing = _mbLoadout.find(e => e.name === name);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      _mbLoadout.push({ name, qty: 1 });
+    }
+    mbSave(MB_LS.LOADOUT, _mbLoadout);
+    mbRenderTable();
+    mbRenderCards();
+  });
+
+  // Config modal
+  const modal = document.getElementById('mb-modal');
+
+  function openMbModal() {
+    document.getElementById('mb-vip').value         = _mbConfig.vip;
+    document.getElementById('mb-booster').value     = _mbConfig.booster;
+    document.getElementById('mb-event-multi').value = _mbConfig.eventMulti;
+    modal.classList.add('open');
+  }
+
+  document.getElementById('mb-config-btn').addEventListener('click', openMbModal);
+  document.querySelector('.nav-btn[data-view="meus-brainrots"]').addEventListener('click', () => {
+    if (localStorage.getItem(MB_LS.CONFIG) === null) openMbModal();
+  });
+  document.getElementById('mb-modal-close').addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+
+  document.getElementById('mb-modal-save').addEventListener('click', () => {
+    _mbConfig = {
+      vip:        document.getElementById('mb-vip').value,
+      booster:    parseFloat(document.getElementById('mb-booster').value) || 1,
+      eventMulti: parseFloat(document.getElementById('mb-event-multi').value) || 1,
+    };
+    mbSave(MB_LS.CONFIG, _mbConfig);
+    modal.classList.remove('open');
+    mbRenderCards();
+    mbRenderTable();
+  });
+
+}
+
 async function init() {
   const [brainrots, rebirths, porretes] = await Promise.all([
     fetch('data/brainrots.json').then(r => r.json()),
@@ -243,21 +539,29 @@ async function init() {
   renderBrainrotTable('rubi-table-wrap',  rubiBrainrots, rubiSort,     'rubi');
   renderRebirths(rebirths);
   renderPorretes(porretes);
+  initMeusbrainrots(brainrots, rebirths);
 
   document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
     btn.addEventListener('click', () => switchView(btn.dataset.view));
   });
 
-  // Tip modal
-  const modal    = document.getElementById('tip-modal');
-  const tipBtn   = document.getElementById('tip-btn');
-  const closeBtn = document.getElementById('tip-close');
+  const tipModal  = document.getElementById('tip-modal');
+  const tipBtn    = document.getElementById('tip-btn');
+  const closeBtn  = document.getElementById('tip-close');
 
-  tipBtn.addEventListener('click', () => modal.classList.add('open'));
-  closeBtn.addEventListener('click', () => modal.classList.remove('open'));
-  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+  tipBtn.addEventListener('click', () => tipModal.classList.add('open'));
+  closeBtn.addEventListener('click', () => tipModal.classList.remove('open'));
+  tipModal.addEventListener('click', e => { if (e.target === tipModal) tipModal.classList.remove('open'); });
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.remove('open'); });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    tipModal.classList.remove('open');
+    document.getElementById('mb-modal').classList.remove('open');
+    document.querySelectorAll('#mb-tbody .qty-form:not(.hidden)').forEach(form => {
+      form.classList.add('hidden');
+      form.previousElementSibling.classList.remove('hidden');
+    });
+  });
 
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {

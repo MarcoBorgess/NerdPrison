@@ -356,3 +356,289 @@ td.brainrots-needed {
   flex-shrink: 0;
   margin-right: 8px;
 }
+
+/* ── Utility ── */
+.hidden { display: none !important; }
+
+/* ── Value colors (used in Meus Brainrots) ── */
+.val-afk   { color: #2ecc71; }
+.val-event { color: #1abc9c; }
+
+/* ── Edit button (config / pencil) ── */
+.edit-btn {
+  width: 28px;
+  height: 28px;
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+  padding: 0;
+}
+.edit-btn:hover { border-color: #555; }
+.edit-btn img { width: 18px; height: 18px; image-rendering: pixelated; }
+
+/* ── Meus Brainrots header ── */
+header.mb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.btn-config {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.btn-config:hover { border-color: #555; }
+.btn-config img { width: 16px; height: 16px; image-rendering: pixelated; }
+
+/* ── 5-card row ── */
+.mb-cards {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.mb-card {
+  background: #16161e;
+  border: 1px solid #2a2a3a;
+  border-radius: 12px;
+  padding: 16px 20px;
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.mb-card-rebirth { align-items: center; }
+
+.mb-card-label {
+  font-size: 0.72rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.mb-card-title {
+  font-size: 0.85rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.mb-multi-hint {
+  color: #e67e22;
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* Card 1: Rebirth */
+.mb-rebirth-level {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.mb-rebirth-multi {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8rem;
+  color: #888;
+}
+.mb-rebirth-multi strong { color: #e0e0e0; }
+
+.mb-step-btns { display: flex; gap: 6px; margin-top: 4px; }
+
+.rebirth-step-btn {
+  width: 30px;
+  height: 30px;
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s;
+}
+.rebirth-step-btn:hover { border-color: #555; }
+
+/* Card 2: Next rebirth */
+.mb-next-cost { font-size: 0.9rem; }
+.mb-next-cost strong { color: #2ecc71; }
+.mb-cost-detail { color: #555; font-size: 0.8rem; }
+.mb-next-brainrots { white-space: pre-line; font-size: 0.8rem; color: #888; line-height: 1.6; }
+.mb-next-afk { font-size: 0.85rem; color: #888; }
+.mb-next-afk strong { color: #e0e0e0; }
+
+/* Cards 3-5: Generation */
+.mb-gen-rows { display: flex; flex-direction: column; }
+
+.mb-gen-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid #1e1e2e;
+  font-size: 0.9rem;
+}
+.mb-gen-row:last-child { border-bottom: none; }
+.mb-gen-row span { color: #666; }
+.mb-gen-row strong { font-size: 1rem; font-weight: 700; }
+
+/* ── Meus Brainrots table ── */
+.mb-table { min-width: 980px; }
+.mb-table tbody tr { height: 44px; }
+.mb-table tbody td { padding: 0 16px; }
+.td-name-flex { display: flex; align-items: center; overflow: hidden; }
+
+.qty-cell { white-space: nowrap; }
+
+.qty-display {
+  cursor: pointer;
+  border-bottom: 1px dashed #444;
+  padding-bottom: 1px;
+}
+.qty-display:hover { border-bottom-color: #888; }
+
+.qty-form {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.qty-input {
+  width: 60px;
+  background: #1e1e2e;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #e0e0e0;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+.qty-input:focus { outline: none; border-color: #aaa; }
+
+.qty-confirm {
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  color: #2ecc71;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color 0.15s;
+}
+.qty-confirm:hover { border-color: #555; }
+
+.btn-remove {
+  background: none;
+  border: 1px solid #2a2a3a;
+  color: #666;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.15s, border-color 0.15s;
+}
+.btn-remove:hover { color: #e74c3c; border-color: #e74c3c; }
+
+/* ── Add form ── */
+.add-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.add-form select {
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  border-radius: 6px;
+  color: #e0e0e0;
+  padding: 7px 10px;
+  font-size: 0.85rem;
+  min-width: 240px;
+  font-family: inherit;
+}
+.add-form select:focus { outline: none; border-color: #555; }
+
+.btn-save-rank {
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  color: #e0e0e0;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+.btn-save-rank:hover { border-color: #555; }
+
+/* ── Config modal fields ── */
+.mb-modal-fields {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.mb-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mb-modal-field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #888;
+}
+
+.mb-modal-field select,
+.mb-modal-field input[type="number"] {
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  border-radius: 6px;
+  color: #e0e0e0;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+.mb-modal-field select:focus,
+.mb-modal-field input[type="number"]:focus { outline: none; border-color: #555; }
+.mb-modal-field input[type="number"] { width: 100px; }
+
+/* ── Mobile: Meus Brainrots ── */
+@media (max-width: 768px) {
+  .mb-cards { flex-direction: column; }
+  .mb-table { min-width: 700px; }
+}
