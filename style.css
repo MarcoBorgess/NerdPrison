@@ -335,6 +335,7 @@ td.brainrots-needed {
   .brainrot-table .col-be     { width: auto; min-width: 110px; }
   .rebirths-table  { min-width: 680px; }
   .porretes-table  { min-width: 420px; }
+
 }
 
 /* ── Very small screens: hide nav labels, show icons only ── */
@@ -641,4 +642,150 @@ header.mb-header {
 @media (max-width: 768px) {
   .mb-cards { flex-direction: column; }
   .mb-table { min-width: 700px; }
+}
+
+/* ── Chaves e Tridentes ── */
+
+.ch-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.ch-header h1 { margin-bottom: 0; }
+
+.ch-info-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #2a2a3a;
+  border: 1px solid #2a2a3a;
+  color: #666;
+  font-size: 0.75rem;
+  font-style: italic;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+}
+.ch-info-btn:hover { border-color: #555; color: #aaa; }
+
+.chaves-info-box { width: 520px; }
+
+.info-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+
+.info-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.info-list li {
+  font-size: 0.84rem;
+  color: #888;
+  padding-left: 10px;
+  border-left: 2px solid #2a2a3a;
+  line-height: 1.5;
+}
+.info-list li strong { color: #e0e0e0; font-weight: 600; }
+
+.chaves-table { min-width: 640px; }
+
+tfoot .chaves-total-row td {
+  border-top: 2px solid #2a2a3a;
+  background: #12121c;
+  padding: 10px 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.btn-itens {
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  color: #aaa;
+  padding: 3px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-itens:hover { border-color: #555; color: #e0e0e0; }
+
+/* Chaves items modal */
+.chaves-modal-box {
+  width: min(95vw, 920px);
+  max-height: 92vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a3a transparent;
+}
+.chaves-modal-box::-webkit-scrollbar { width: 4px; }
+.chaves-modal-box::-webkit-scrollbar-track { background: transparent; }
+.chaves-modal-box::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 2px; }
+
+.chaves-items-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* Reset sticky inside modal (global sets top:54px for nav) */
+.chaves-items-scroll thead th { position: static; }
+
+.chaves-items-table { min-width: 540px; }
+
+.ch-val-input {
+  width: 84px;
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  border-radius: 4px;
+  color: #e0e0e0;
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  text-align: right;
+}
+.ch-val-input:focus { outline: none; border-color: #555; }
+
+.ch-key-val {
+  color: #555;
+  font-size: 0.82rem;
+  font-style: italic;
+}
+
+.garantido-badge {
+  color: #2ecc71;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  margin-left: 3px;
+  opacity: 0.85;
+}
+
+.tridentes-table { min-width: 560px; table-layout: fixed; }
+.tridentes-table thead th,
+.tridentes-table td { text-align: left; }
+
+/* Remove ellipsis dot artifact without allowing cell content to overflow */
+.chaves-table td,
+.tridentes-table td { text-overflow: clip; }
+
+/* Wider inputs in the main tables */
+.ch-qty-input,
+.tr-qty-input  { width: 120px; }
+.tr-input      { width: 168px; }
+
+@media (max-width: 768px) {
+  .chaves-table    { min-width: 520px; }
+  .chaves-modal-box { width: 100%; }
+  .ch-qty-input,
+  .tr-qty-input  { width: 60px; }
+  .tr-input      { width: 84px; }
 }

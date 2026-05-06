@@ -24,6 +24,9 @@
     <button class="nav-btn burger-btn" data-view="meus-brainrots">
       <img src="assets/computer.webp" alt="" class="mc-icon">
     </button>
+    <button class="nav-btn" data-view="chaves">
+      <img src="assets/vault.webp" alt="" class="mc-icon">
+    </button>
     <button class="nav-btn" id="tip-btn">
       <img src="assets/burger.webp" alt="" class="mc-icon">
     </button>
@@ -87,6 +90,61 @@
       </div>
     </section>
 
+    <section id="view-chaves" class="view">
+      <header class="ch-header">
+        <h1>Chaves e Tridentes</h1>
+        <button class="ch-info-btn" id="chaves-info-btn">i</button>
+      </header>
+      <div class="brainrots-card">
+        <div class="table-scroll">
+          <table class="chaves-table">
+            <colgroup>
+              <col class="col-name">
+              <col class="col-qty">
+              <col><col><col><col><col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Chave</th>
+                <th class="num">Qtd</th>
+                <th class="num">VE Tokens</th>
+                <th class="num">VE Coins</th>
+                <th class="num">Total Tokens</th>
+                <th class="num">Total Coins</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="chaves-tbody"></tbody>
+            <tfoot id="chaves-tfoot"></tfoot>
+          </table>
+        </div>
+      </div>
+      <h2 style="margin-top:28px">Tridentes</h2>
+      <div class="brainrots-card">
+        <div class="table-scroll">
+          <table class="tridentes-table">
+            <colgroup>
+              <col class="col-name">
+              <col class="col-qty">
+              <col><col><col><col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Tridente</th>
+                <th class="num">Qtd</th>
+                <th class="num">Tokens / 1</th>
+                <th class="num">Coins / 1</th>
+                <th class="num">Total T</th>
+                <th class="num">Total C</th>
+              </tr>
+            </thead>
+            <tbody id="tridentes-tbody"></tbody>
+            <tfoot id="tridentes-tfoot"></tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
   </div>
 
   <!-- Tip modal -->
@@ -136,6 +194,71 @@
         </div>
       </div>
       <button class="btn-save-rank" id="mb-modal-save">Salvar</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="chaves-modal">
+    <div class="modal-box chaves-modal-box">
+      <div class="modal-title">
+        <span id="chaves-modal-title"></span>
+        <button class="modal-close" id="chaves-modal-close">✕</button>
+      </div>
+      <div class="table-scroll chaves-items-scroll">
+        <table class="chaves-items-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th class="num">Odd</th>
+              <th class="num">Qtd</th>
+              <th class="num">Valor T</th>
+              <th class="num">Valor C</th>
+              <th class="num">VE T</th>
+              <th class="num">VE C</th>
+            </tr>
+          </thead>
+          <tbody id="chaves-items-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="chaves-info-modal">
+    <div class="modal-box chaves-info-box">
+      <div class="modal-title">
+        <span>Como funciona</span>
+        <button class="modal-close" id="chaves-info-close">✕</button>
+      </div>
+
+      <p class="info-section-title">Tabela de Chaves</p>
+      <ul class="info-list">
+        <li><strong>Qtd</strong> — Quantas chaves você possui. Multiplica o VE para calcular o Total.</li>
+        <li><strong>VE Tokens / VE Coins</strong> — Valor esperado por abertura, calculado automaticamente.</li>
+        <li><strong>Total T / Total C</strong> — VE × Qtd.</li>
+        <li>Clique em <strong>Itens</strong> ou na linha para configurar os valores dos itens de cada chave.</li>
+      </ul>
+
+      <p class="info-section-title">Modal de Itens</p>
+      <ul class="info-list">
+        <li><strong>Odd %</strong> — Chance bruta do roll. O sistema tenta do 1º ao último em sequência; o último sempre cai.</li>
+        <li><strong>Qtd</strong> — Quantidade dropada quando o item é sorteado.</li>
+        <li><strong>Valor T / Valor C</strong> — Valor em Tokens e Coins por unidade.
+          Itens que são <strong>outras chaves</strong> ou <strong>tridentes</strong> são preenchidos automaticamente.</li>
+        <li><strong>VE T / VE C</strong> — Valor esperado do item por abertura (probabilidade real × qtd × valor).</li>
+      </ul>
+
+      <p class="info-section-title">Tabela de Tridentes</p>
+      <ul class="info-list">
+        <li>Preencha <strong>Tokens / 1</strong> e <strong>Coins / 1</strong> para cada tridente.</li>
+        <li>Esses valores são usados automaticamente em todas as chaves que dropam aquele tridente.</li>
+        <li><strong>Qtd</strong> é só controle de inventário — não afeta o VE das chaves.</li>
+      </ul>
+
+      <p class="info-section-title">Probabilidades</p>
+      <ul class="info-list">
+        <li>O sistema tenta cada item em ordem. Se o 1º não cair, tenta o 2º, e assim por diante.</li>
+        <li>A <strong>probabilidade real</strong> de cada item já leva em conta as chances anteriores.</li>
+        <li>Chaves que dropam outras chaves têm o VE calculado automaticamente, incluindo auto-referências.</li>
+      </ul>
     </div>
   </div>
 

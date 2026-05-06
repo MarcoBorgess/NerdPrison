@@ -525,11 +525,449 @@ function initMeusbrainrots(brainrots, rebirths) {
 
 }
 
+// ── Calculadora de Chaves ────────────────────────────────────────────────────
+
+const _PARSE_SUFFIXES = [
+  ['OC', 1e27], ['SS', 1e24], ['S', 1e21], ['QQ', 1e18], ['Q', 1e15],
+  ['T', 1e12], ['B', 1e9], ['M', 1e6], ['K', 1e3],
+];
+
+function parseNotation(str) {
+  if (str === null || str === undefined || str === '') return 0;
+  if (typeof str === 'number') return str;
+  const s = String(str).trim().toUpperCase().replace(',', '.');
+  for (const [sfx, mult] of _PARSE_SUFFIXES) {
+    if (s.endsWith(sfx)) {
+      const n = parseFloat(s.slice(0, -sfx.length));
+      return isNaN(n) ? 0 : n * mult;
+    }
+  }
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+}
+
+function fmtBig(n) {
+  if (n === 0) return '0';
+  const a = Math.abs(n);
+  if (a >= 1e27) return (n / 1e27).toFixed(2) + 'OC';
+  if (a >= 1e24) return (n / 1e24).toFixed(2) + 'SS';
+  if (a >= 1e21) return (n / 1e21).toFixed(2) + 'S';
+  if (a >= 1e18) return (n / 1e18).toFixed(2) + 'QQ';
+  if (a >= 1e15) return (n / 1e15).toFixed(2) + 'Q';
+  if (a >= 1e12) return (n / 1e12).toFixed(2) + 'T';
+  if (a >= 1e9)  return (n / 1e9 ).toFixed(2) + 'B';
+  if (a >= 1e6)  return (n / 1e6 ).toFixed(2) + 'M';
+  if (a >= 1e3)  return (n / 1e3 ).toFixed(2) + 'K';
+  return n.toFixed(2);
+}
+
+function calcProbs(items) {
+  const probs = [];
+  let remaining = 1;
+  for (let i = 0; i < items.length; i++) {
+    if (i === items.length - 1) {
+      probs.push(remaining);
+    } else {
+      const p = remaining * (items[i].odd / 100);
+      probs.push(p);
+      remaining *= (1 - items[i].odd / 100);
+    }
+  }
+  return probs;
+}
+
+const TRIDENTES = [
+  'Tridente Comum', 'Tridente Raro', 'Tridente Épico', 'Tridente Lendário',
+  'Tridente Místico', 'Tridente Celestial', 'Tridente Supremo',
+];
+const TRIDENTE_COLORS = ['#AAAAAA', '#55FFFF', '#FF55FF', '#FFAA00', '#AA00AA', '#0000AA', '#AA0000'];
+
+const TRIDENTES_LS = 'tridentes_data';
+function trLoad() {
+  try { const v = localStorage.getItem(TRIDENTES_LS); return v ? JSON.parse(v) : {}; } catch { return {}; }
+}
+function trSave(data) { localStorage.setItem(TRIDENTES_LS, JSON.stringify(data)); }
+
+function recalcTridenteFooter(saved) {
+  const tfoot = document.getElementById('tridentes-tfoot');
+  if (!tfoot) return;
+  let totalT = 0, totalC = 0, hasTotalT = false, hasTotalC = false;
+  for (const name of TRIDENTES) {
+    const d   = saved[name] || {};
+    const qty = parseInt(d.qty) || 0;
+    const tP1 = parseNotation(d.tokensP1);
+    const cP1 = parseNotation(d.coinsP1);
+    if (tP1 > 0) { totalT += tP1 * qty; hasTotalT = true; }
+    if (cP1 > 0) { totalC += cP1 * qty; hasTotalC = true; }
+  }
+  tfoot.querySelector('[data-trid-total-t]').textContent = hasTotalT ? fmtBig(totalT) : '—';
+  tfoot.querySelector('[data-trid-total-c]').textContent = hasTotalC ? fmtBig(totalC) : '—';
+}
+
+function renderTridentes() {
+  const tbody = document.getElementById('tridentes-tbody');
+  const tfoot = document.getElementById('tridentes-tfoot');
+  const tr    = trLoad();
+
+  let totalT = 0, totalC = 0, hasTotalT = false, hasTotalC = false;
+  let html = '';
+
+  TRIDENTES.forEach((name, i) => {
+    const d   = tr[name] || { tokensP1: '', coinsP1: '', qty: 0 };
+    const tP1 = parseNotation(d.tokensP1);
+    const cP1 = parseNotation(d.coinsP1);
+    const qty = parseInt(d.qty) || 0;
+    const totT = tP1 > 0 ? tP1 * qty : null;
+    const totC = cP1 > 0 ? cP1 * qty : null;
+    if (totT !== null) { totalT += totT; hasTotalT = true; }
+    if (totC !== null) { totalC += totC; hasTotalC = true; }
+
+    html += `<tr data-trident-row="${escAttr(name)}">
+      <td class="td-name">${mcImg('trident')}<span class="brainrot-name" style="color:${TRIDENTE_COLORS[i]};font-weight:700">${name}</span></td>
+      <td class="num"><input type="number" class="qty-input tr-qty-input" data-trident="${escAttr(name)}" value="${qty}" min="0"></td>
+      <td class="num"><input type="text" class="ch-val-input tr-input" data-trident="${escAttr(name)}" data-field="tokensP1" value="${escAttr(d.tokensP1 || '')}" placeholder="—"></td>
+      <td class="num"><input type="text" class="ch-val-input tr-input" data-trident="${escAttr(name)}" data-field="coinsP1" value="${escAttr(d.coinsP1 || '')}" placeholder="—"></td>
+      <td class="num token-val" data-tot-t>${totT !== null ? fmtBig(totT) : '—'}</td>
+      <td class="num green-val"  data-tot-c>${totC !== null ? fmtBig(totC) : '—'}</td>
+    </tr>`;
+  });
+
+  tbody.innerHTML = html;
+
+  tfoot.innerHTML = `<tr class="chaves-total-row">
+    <td colspan="4" style="color:#666;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;padding:10px 16px">Total</td>
+    <td class="num token-val" data-trid-total-t>${hasTotalT ? fmtBig(totalT) : '—'}</td>
+    <td class="num green-val"  data-trid-total-c>${hasTotalC ? fmtBig(totalC) : '—'}</td>
+  </tr>`;
+
+  tbody.querySelectorAll('.tr-input').forEach(input => {
+    input.addEventListener('input', () => {
+      const name  = input.dataset.trident;
+      const field = input.dataset.field;
+      const saved = trLoad();
+      if (!saved[name]) saved[name] = { tokensP1: '', coinsP1: '', qty: 0 };
+      saved[name][field] = input.value;
+      trSave(saved);
+
+      const row = tbody.querySelector(`tr[data-trident-row="${escAttr(name)}"]`);
+      const d   = saved[name];
+      const qty = parseInt(d.qty) || 0;
+      const tP1 = parseNotation(d.tokensP1);
+      const cP1 = parseNotation(d.coinsP1);
+      row.querySelector('[data-tot-t]').textContent = tP1 > 0 ? fmtBig(tP1 * qty) : '—';
+      row.querySelector('[data-tot-c]').textContent = cP1 > 0 ? fmtBig(cP1 * qty) : '—';
+      recalcTridenteFooter(saved);
+      renderChavesTable();
+    });
+  });
+
+  tbody.querySelectorAll('.tr-qty-input').forEach(inp => {
+    inp.addEventListener('change', () => {
+      const name = inp.dataset.trident;
+      const val  = parseInt(inp.value);
+      if (!isNaN(val) && val >= 0) {
+        const saved = trLoad();
+        if (!saved[name]) saved[name] = { tokensP1: '', coinsP1: '', qty: 0 };
+        saved[name].qty = val;
+        trSave(saved);
+        renderTridentes();
+      }
+    });
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') inp.blur(); });
+  });
+}
+
+function computeAllKeyEVs() {
+  const keyNames     = new Set(_chavesData.map(k => k.name));
+  const tridentNames = new Set(TRIDENTES);
+  const trData       = trLoad();
+  const evs = {};
+  for (const key of _chavesData) evs[key.name] = { veT: 0, veC: 0 };
+
+  for (let iter = 0; iter < 100; iter++) {
+    const next = {};
+    for (const key of _chavesData) {
+      const saved = _chSaved[key.name] || {};
+      const probs = calcProbs(key.items);
+      let veT = 0, veC = 0;
+      key.items.forEach((item, i) => {
+        const prob = probs[i];
+        const qty  = parseNotation(item.qty);
+        if (keyNames.has(item.name)) {
+          veT += prob * qty * evs[item.name].veT;
+          veC += prob * qty * evs[item.name].veC;
+        } else if (tridentNames.has(item.name)) {
+          const tr = trData[item.name] || {};
+          if (tr.tokensP1) veT += prob * qty * parseNotation(tr.tokensP1);
+          if (tr.coinsP1)  veC += prob * qty * parseNotation(tr.coinsP1);
+        } else {
+          const s = (saved.items || {})[item.name] || {};
+          if (s.valorT != null && s.valorT !== '') veT += prob * qty * parseNotation(s.valorT);
+          if (s.valorC != null && s.valorC !== '') veC += prob * qty * parseNotation(s.valorC);
+        }
+      });
+      next[key.name] = { veT, veC };
+    }
+    for (const k in next) evs[k] = next[k];
+  }
+  return evs;
+}
+
+function escAttr(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+}
+
+const CHAVES_LS = 'chaves_data';
+let _chavesData = [];
+let _chSaved    = {};
+
+function chLoad() {
+  try { const v = localStorage.getItem(CHAVES_LS); return v ? JSON.parse(v) : {}; } catch { return {}; }
+}
+function chSave(data) { localStorage.setItem(CHAVES_LS, JSON.stringify(data)); }
+
+function chKeyVE(key, allEvs) {
+  const ev = allEvs[key.name] || { veT: 0, veC: 0 };
+  return { veT: ev.veT > 0 ? ev.veT : null, veC: ev.veC > 0 ? ev.veC : null };
+}
+
+function renderChavesTable() {
+  const tbody  = document.getElementById('chaves-tbody');
+  const tfoot  = document.getElementById('chaves-tfoot');
+  const allEvs = computeAllKeyEVs();
+
+  let totalT = 0, totalC = 0, hasTotalT = false, hasTotalC = false;
+  let html = '';
+
+  for (const key of _chavesData) {
+    const saved = _chSaved[key.name] || {};
+    const qty   = saved.qty != null ? saved.qty : 0;
+    const { veT, veC } = chKeyVE(key, allEvs);
+    const totT  = veT !== null ? veT * qty : null;
+    const totC  = veC !== null ? veC * qty : null;
+    if (totT !== null) { totalT += totT; hasTotalT = true; }
+    if (totC !== null) { totalC += totC; hasTotalC = true; }
+
+    html += `<tr class="chave-row" data-key="${escAttr(key.name)}" style="cursor:pointer">
+      <td class="td-name">${mcImg(key.icon)}<span class="brainrot-name">${key.name}</span></td>
+      <td class="num"><input type="number" class="qty-input ch-qty-input" value="${qty}" min="0"></td>
+      <td class="num token-val">${veT !== null ? fmtBig(veT) : '—'}</td>
+      <td class="num green-val">${veC !== null ? fmtBig(veC) : '—'}</td>
+      <td class="num token-val">${totT !== null ? fmtBig(totT) : '—'}</td>
+      <td class="num green-val">${totC !== null ? fmtBig(totC) : '—'}</td>
+      <td style="text-align:right"><button class="btn-itens">Itens</button></td>
+    </tr>`;
+  }
+
+  if (_chavesData.length === 0) {
+    html = `<tr><td colspan="7" style="color:#555;text-align:center;padding:20px">Nenhuma chave cadastrada.</td></tr>`;
+  }
+
+  tbody.innerHTML = html;
+
+  tfoot.innerHTML = `<tr class="chaves-total-row">
+    <td colspan="4" style="color:#666;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em">Total Geral</td>
+    <td class="num token-val">${hasTotalT ? fmtBig(totalT) : '—'}</td>
+    <td class="num green-val">${hasTotalC ? fmtBig(totalC) : '—'}</td>
+    <td></td>
+  </tr>`;
+
+  tbody.querySelectorAll('.chave-row').forEach(row => {
+    row.addEventListener('click', e => {
+      if (e.target.closest('.ch-qty-input') || e.target.closest('.btn-itens')) return;
+      openChavesModal(_chavesData.find(k => k.name === row.dataset.key));
+    });
+  });
+
+  tbody.querySelectorAll('.btn-itens').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      openChavesModal(_chavesData.find(k => k.name === btn.closest('tr').dataset.key));
+    });
+  });
+
+  tbody.querySelectorAll('.ch-qty-input').forEach(inp => {
+    inp.addEventListener('change', () => {
+      const keyName = inp.closest('tr').dataset.key;
+      const val = parseInt(inp.value);
+      if (!isNaN(val) && val >= 0) {
+        if (!_chSaved[keyName]) _chSaved[keyName] = { qty: 0, items: {} };
+        _chSaved[keyName].qty = val;
+        chSave(_chSaved);
+        renderChavesTable();
+      }
+    });
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') inp.blur(); });
+  });
+}
+
+function openChavesModal(key) {
+  if (!key) return;
+  const modal        = document.getElementById('chaves-modal');
+  const keyNames     = new Set(_chavesData.map(k => k.name));
+  const tridentNames = new Set(TRIDENTES);
+  const trData       = trLoad();
+  document.getElementById('chaves-modal-title').textContent = key.name;
+
+  const tbody  = document.getElementById('chaves-items-tbody');
+  const probs  = calcProbs(key.items);
+  const saved  = _chSaved[key.name] || {};
+  const allEvs = computeAllKeyEVs();
+  const last   = key.items.length - 1;
+
+  let html = '';
+  key.items.forEach((item, i) => {
+    const prob      = probs[i];
+    const qty       = parseNotation(item.qty);
+    const isKey     = keyNames.has(item.name);
+    const isTrident = tridentNames.has(item.name);
+    const oddTd     = `${item.odd}%`;
+
+    let valorTd, valorCd, veT, veC;
+    if (isKey) {
+      const refEv = allEvs[item.name] || { veT: 0, veC: 0 };
+      valorTd = `<span class="ch-key-val" data-valor-t>${refEv.veT > 0 ? fmtBig(refEv.veT) : '—'}</span>`;
+      valorCd = `<span class="ch-key-val" data-valor-c>${refEv.veC > 0 ? fmtBig(refEv.veC) : '—'}</span>`;
+      veT     = refEv.veT > 0 ? fmtBig(prob * qty * refEv.veT) : '—';
+      veC     = refEv.veC > 0 ? fmtBig(prob * qty * refEv.veC) : '—';
+    } else if (isTrident) {
+      const tr  = trData[item.name] || {};
+      const tP1 = parseNotation(tr.tokensP1);
+      const cP1 = parseNotation(tr.coinsP1);
+      valorTd = `<span class="ch-key-val" data-valor-t>${tP1 > 0 ? fmtBig(tP1) : '—'}</span>`;
+      valorCd = `<span class="ch-key-val" data-valor-c>${cP1 > 0 ? fmtBig(cP1) : '—'}</span>`;
+      veT     = tP1 > 0 ? fmtBig(prob * qty * tP1) : '—';
+      veC     = cP1 > 0 ? fmtBig(prob * qty * cP1) : '—';
+    } else {
+      const s    = (saved.items || {})[item.name] || {};
+      const hasT = s.valorT != null && s.valorT !== '';
+      const hasC = s.valorC != null && s.valorC !== '';
+      valorTd = `<input type="text" class="ch-val-input" data-field="valorT" value="${escAttr(s.valorT || '')}" placeholder="—">`;
+      valorCd = `<input type="text" class="ch-val-input" data-field="valorC" value="${escAttr(s.valorC || '')}" placeholder="—">`;
+      veT     = hasT ? fmtBig(prob * qty * parseNotation(s.valorT)) : '—';
+      veC     = hasC ? fmtBig(prob * qty * parseNotation(s.valorC)) : '—';
+    }
+
+    html += `<tr data-key="${escAttr(key.name)}" data-item="${escAttr(item.name)}" data-idx="${i}">
+      <td class="td-name">${mcImg(item.icon)}<span class="brainrot-name">${item.name}</span></td>
+      <td class="num muted-val">${oddTd}</td>
+      <td class="num muted-val">${fmtBig(qty)}</td>
+      <td class="num">${valorTd}</td>
+      <td class="num">${valorCd}</td>
+      <td class="num token-val" data-ve-t>${veT}</td>
+      <td class="num green-val"  data-ve-c>${veC}</td>
+    </tr>`;
+  });
+
+  tbody.innerHTML = html;
+  modal.classList.add('open');
+
+  tbody.querySelectorAll('.ch-val-input').forEach(input => {
+    input.addEventListener('input', () => {
+      const row      = input.closest('tr');
+      const keyName  = row.dataset.key;
+      const itemName = row.dataset.item;
+      const field    = input.dataset.field;
+
+      if (!_chSaved[keyName])                    _chSaved[keyName]               = { qty: 0, items: {} };
+      if (!_chSaved[keyName].items)              _chSaved[keyName].items         = {};
+      if (!_chSaved[keyName].items[itemName])    _chSaved[keyName].items[itemName] = {};
+      _chSaved[keyName].items[itemName][field] = input.value;
+      chSave(_chSaved);
+
+      const newEvs = computeAllKeyEVs();
+      updateModalVEs(key, newEvs);
+      renderChavesTable();
+    });
+  });
+}
+
+function updateModalVEs(key, allEvs) {
+  const tbody        = document.getElementById('chaves-items-tbody');
+  if (!tbody) return;
+  const keyNames     = new Set(_chavesData.map(k => k.name));
+  const tridentNames = new Set(TRIDENTES);
+  const trData       = trLoad();
+  const probs        = calcProbs(key.items);
+  const saved        = _chSaved[key.name] || {};
+
+  key.items.forEach((item, i) => {
+    const row = tbody.querySelector(`tr[data-idx="${i}"]`);
+    if (!row) return;
+    const prob = probs[i];
+    const qty  = parseNotation(item.qty);
+
+    if (keyNames.has(item.name)) {
+      const refEv = allEvs[item.name] || { veT: 0, veC: 0 };
+      row.querySelector('[data-valor-t]').textContent = refEv.veT > 0 ? fmtBig(refEv.veT) : '—';
+      row.querySelector('[data-valor-c]').textContent = refEv.veC > 0 ? fmtBig(refEv.veC) : '—';
+      row.querySelector('[data-ve-t]').textContent    = refEv.veT > 0 ? fmtBig(prob * qty * refEv.veT) : '—';
+      row.querySelector('[data-ve-c]').textContent    = refEv.veC > 0 ? fmtBig(prob * qty * refEv.veC) : '—';
+    } else if (tridentNames.has(item.name)) {
+      const tr  = trData[item.name] || {};
+      const tP1 = parseNotation(tr.tokensP1);
+      const cP1 = parseNotation(tr.coinsP1);
+      row.querySelector('[data-valor-t]').textContent = tP1 > 0 ? fmtBig(tP1) : '—';
+      row.querySelector('[data-valor-c]').textContent = cP1 > 0 ? fmtBig(cP1) : '—';
+      row.querySelector('[data-ve-t]').textContent    = tP1 > 0 ? fmtBig(prob * qty * tP1) : '—';
+      row.querySelector('[data-ve-c]').textContent    = cP1 > 0 ? fmtBig(prob * qty * cP1) : '—';
+    } else {
+      const s    = (saved.items || {})[item.name] || {};
+      const hasT = s.valorT != null && s.valorT !== '';
+      const hasC = s.valorC != null && s.valorC !== '';
+      row.querySelector('[data-ve-t]').textContent = hasT ? fmtBig(prob * qty * parseNotation(s.valorT)) : '—';
+      row.querySelector('[data-ve-c]').textContent = hasC ? fmtBig(prob * qty * parseNotation(s.valorC)) : '—';
+    }
+  });
+}
+
+function initChaves(chaves) {
+  _chavesData = chaves;
+  _chSaved    = chLoad();
+
+  let dirty = false;
+  for (const key of _chavesData) {
+    for (const item of key.items) {
+      if (item.icon === 'horn_coral' && item.name.includes('Tokens')) {
+        if (!_chSaved[key.name])                      _chSaved[key.name]               = { qty: 0, items: {} };
+        if (!_chSaved[key.name].items)                _chSaved[key.name].items         = {};
+        if (!_chSaved[key.name].items[item.name])     _chSaved[key.name].items[item.name] = {};
+        if (!_chSaved[key.name].items[item.name].valorT) {
+          _chSaved[key.name].items[item.name].valorT = '1';
+          dirty = true;
+        }
+      }
+    }
+  }
+  if (dirty) chSave(_chSaved);
+
+  renderChavesTable();
+  renderTridentes();
+
+  const modal = document.getElementById('chaves-modal');
+  document.getElementById('chaves-modal-close').addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+
+  const infoModal = document.getElementById('chaves-info-modal');
+  const openInfo  = () => infoModal.classList.add('open');
+  document.getElementById('chaves-info-btn').addEventListener('click', openInfo);
+  document.getElementById('chaves-info-close').addEventListener('click', () => infoModal.classList.remove('open'));
+  infoModal.addEventListener('click', e => { if (e.target === infoModal) infoModal.classList.remove('open'); });
+
+  document.querySelector('.nav-btn[data-view="chaves"]').addEventListener('click', () => {
+    if (!localStorage.getItem('chaves_info_seen')) {
+      localStorage.setItem('chaves_info_seen', '1');
+      openInfo();
+    }
+  });
+}
+
 async function init() {
-  const [brainrots, rebirths, porretes] = await Promise.all([
+  const [brainrots, rebirths, porretes, chaves] = await Promise.all([
     fetch('data/brainrots.json').then(r => r.json()),
     fetch('data/rebirths.json').then(r => r.json()),
     fetch('data/porretes.json').then(r => r.json()),
+    fetch('data/chaves.json').then(r => r.json()),
   ]);
 
   const coinBrainrots = brainrots.filter(b => b.currency !== 'rubi');
@@ -540,6 +978,7 @@ async function init() {
   renderRebirths(rebirths);
   renderPorretes(porretes);
   initMeusbrainrots(brainrots, rebirths);
+  initChaves(chaves);
 
   document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
     btn.addEventListener('click', () => switchView(btn.dataset.view));
@@ -557,6 +996,8 @@ async function init() {
     if (e.key !== 'Escape') return;
     tipModal.classList.remove('open');
     document.getElementById('mb-modal').classList.remove('open');
+    document.getElementById('chaves-modal').classList.remove('open');
+    document.getElementById('chaves-info-modal').classList.remove('open');
     document.querySelectorAll('#mb-tbody .qty-form:not(.hidden)').forEach(form => {
       form.classList.add('hidden');
       form.previousElementSibling.classList.remove('hidden');

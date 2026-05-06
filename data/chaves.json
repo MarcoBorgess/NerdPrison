@@ -1,0 +1,704 @@
+﻿[
+  {
+    "name": "Key Pesca",
+    "icon": "blue_dye",
+    "items": [
+      {
+        "name": "Peitoral do Poseidon",
+        "icon": "diamond_chestplate",
+        "odd": 0.03,
+        "qty": "1"
+      },
+      {
+        "name": "Tridente Místico",
+        "icon": "trident",
+        "odd": 0.7,
+        "qty": "1"
+      },
+      {
+        "name": "3.2T Tokens",
+        "icon": "horn_coral",
+        "odd": 70.0,
+        "qty": "3.2T"
+      },
+      {
+        "name": "3T Tokens",
+        "icon": "horn_coral",
+        "odd": 75.0,
+        "qty": "3T"
+      }
+    ]
+  },
+  {
+    "name": "Key Alpha",
+    "icon": "tripwire_hook",
+    "items": [
+      {
+        "name": "400M Tokens",
+        "icon": "horn_coral",
+        "odd": 1.5,
+        "qty": "400M"
+      },
+      {
+        "name": "Tridente Comum",
+        "icon": "trident",
+        "odd": 0.8,
+        "qty": "1"
+      },
+      {
+        "name": "100M Tokens",
+        "icon": "horn_coral",
+        "odd": 0.9,
+        "qty": "100M"
+      },
+      {
+        "name": "Porrete de Madeira",
+        "icon": "stick",
+        "odd": 1.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Coins 1.3x 5min",
+        "icon": "sunflower",
+        "odd": 2.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Tokens 1.2x 5min",
+        "icon": "trial_key",
+        "odd": 3.0,
+        "qty": "1"
+      },
+      {
+        "name": "Key Beta",
+        "icon": "trial_key",
+        "odd": 5.0,
+        "qty": "2"
+      },
+      {
+        "name": "Key Alpha",
+        "icon": "tripwire_hook",
+        "odd": 30.0,
+        "qty": "2"
+      },
+      {
+        "name": "40M Tokens",
+        "icon": "horn_coral",
+        "odd": 60.0,
+        "qty": "40M"
+      },
+      {
+        "name": "20M Tokens",
+        "icon": "horn_coral",
+        "odd": 75.0,
+        "qty": "20M"
+      }
+    ]
+  },
+  {
+    "name": "Key Beta",
+    "icon": "trial_key",
+    "items": [
+      {
+        "name": "Skin Alpha",
+        "icon": "netherite_pickaxe",
+        "odd": 0.08,
+        "qty": "1"
+      },
+      {
+        "name": "Key Omega",
+        "icon": "ominous_trial_key",
+        "odd": 0.09,
+        "qty": "1"
+      },
+      {
+        "name": "5.8B Tokens",
+        "icon": "horn_coral",
+        "odd": 1.5,
+        "qty": "5.8B"
+      },
+      {
+        "name": "Tridente Raro",
+        "icon": "trident",
+        "odd": 0.8,
+        "qty": "1"
+      },
+      {
+        "name": "Bastão LvL 1",
+        "icon": "mace",
+        "odd": 0.1,
+        "qty": "1"
+      },
+      {
+        "name": "Porrete de Osso",
+        "icon": "bone",
+        "odd": 5.0,
+        "qty": "1"
+      },
+      {
+        "name": "Key Beta",
+        "icon": "trial_key",
+        "odd": 7.0,
+        "qty": "3"
+      },
+      {
+        "name": "Booster de Tokens 1.3x 5min",
+        "icon": "trial_key",
+        "odd": 2.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Coins 1.5x 5min",
+        "icon": "sunflower",
+        "odd": 3.0,
+        "qty": "1"
+      },
+      {
+        "name": "Key Beta",
+        "icon": "trial_key",
+        "odd": 25.0,
+        "qty": "2"
+      },
+      {
+        "name": "2B Tokens",
+        "icon": "horn_coral",
+        "odd": 60.0,
+        "qty": "2B"
+      },
+      {
+        "name": "1B Tokens",
+        "icon": "horn_coral",
+        "odd": 75.0,
+        "qty": "1B"
+      }
+    ]
+  },
+  {
+    "name": "Key Omega",
+    "icon": "ominous_trial_key",
+    "items": [
+      {
+        "name": "Skin Ultimate",
+        "icon": "netherite_pickaxe",
+        "odd": 0.1,
+        "qty": "1"
+      },
+      {
+        "name": "Key Carnaval",
+        "icon": "parrot_spawn_egg",
+        "odd": 0.8,
+        "qty": "1"
+      },
+      {
+        "name": "Tridente Épico",
+        "icon": "trident",
+        "odd": 3.0,
+        "qty": "1"
+      },
+      {
+        "name": "Bastão LvL 2",
+        "icon": "mace",
+        "odd": 4.0,
+        "qty": "1"
+      },
+      {
+        "name": "1.8T Tokens",
+        "icon": "horn_coral",
+        "odd": 5.0,
+        "qty": "1.8T"
+      },
+      {
+        "name": "Key Omega",
+        "icon": "ominous_trial_key",
+        "odd": 7.0,
+        "qty": "2"
+      },
+      {
+        "name": "Porrete de Osso",
+        "icon": "bone",
+        "odd": 10.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Armadura 2x 10min",
+        "icon": "water_bottle",
+        "odd": 15.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Tokens 1.5x 10min",
+        "icon": "trial_key",
+        "odd": 30.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Coins 1.7x 10min",
+        "icon": "sunflower",
+        "odd": 40.0,
+        "qty": "1"
+      },
+      {
+        "name": "600B Tokens",
+        "icon": "horn_coral",
+        "odd": 60.0,
+        "qty": "600B"
+      }
+    ]
+  },
+  {
+    "name": "Key Carnaval",
+    "icon": "parrot_spawn_egg",
+    "items": [
+      {
+        "name": "Skin Folia",
+        "icon": "netherite_pickaxe",
+        "odd": 0.1,
+        "qty": "1"
+      },
+      {
+        "name": "Tridente Místico",
+        "icon": "trident",
+        "odd": 4.0,
+        "qty": "1"
+      },
+      {
+        "name": "Bastão LvL 3",
+        "icon": "mace",
+        "odd": 5.0,
+        "qty": "1"
+      },
+      {
+        "name": "20T Tokens",
+        "icon": "horn_coral",
+        "odd": 6.0,
+        "qty": "20T"
+      },
+      {
+        "name": "Key Carnaval",
+        "icon": "parrot_spawn_egg",
+        "odd": 7.0,
+        "qty": "2"
+      },
+      {
+        "name": "Porrete do Breeze",
+        "icon": "breeze_rod",
+        "odd": 10.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Armadura 3x 10min",
+        "icon": "water_bottle",
+        "odd": 15.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Tokens 1.8x 5min",
+        "icon": "trial_key",
+        "odd": 30.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Coins 2.0x 5min",
+        "icon": "sunflower",
+        "odd": 40.0,
+        "qty": "1"
+      },
+      {
+        "name": "8T Tokens",
+        "icon": "horn_coral",
+        "odd": 60.0,
+        "qty": "8T"
+      }
+    ]
+  },
+  {
+    "name": "Key Aurora",
+    "icon": "ender_eye",
+    "items": [
+      {
+        "name": "Skin Aurora",
+        "icon": "netherite_pickaxe",
+        "odd": 0.2,
+        "qty": "1"
+      },
+      {
+        "name": "Tridente Místico",
+        "icon": "trident",
+        "odd": 4.0,
+        "qty": "3"
+      },
+      {
+        "name": "Bastão LvL 4",
+        "icon": "mace",
+        "odd": 5.0,
+        "qty": "1"
+      },
+      {
+        "name": "500T Tokens",
+        "icon": "horn_coral",
+        "odd": 6.0,
+        "qty": "500T"
+      },
+      {
+        "name": "Key Aurora",
+        "icon": "ender_eye",
+        "odd": 7.0,
+        "qty": "2"
+      },
+      {
+        "name": "Machado de Madeira",
+        "icon": "wooden_axe",
+        "odd": 10.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Armadura 5x 15min",
+        "icon": "water_bottle",
+        "odd": 15.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Tokens 2.2x 10min",
+        "icon": "trial_key",
+        "odd": 30.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Coins 2.3x 10min",
+        "icon": "sunflower",
+        "odd": 40.0,
+        "qty": "1"
+      },
+      {
+        "name": "100T Tokens",
+        "icon": "horn_coral",
+        "odd": 60.0,
+        "qty": "100T"
+      }
+    ]
+  },
+  {
+    "name": "Key Tempestade",
+    "icon": "heart_of_the_sea",
+    "items": [
+      {
+        "name": "Skin Tempepstade",
+        "icon": "netherite_pickaxe",
+        "odd": 0.2,
+        "qty": "1"
+      },
+      {
+        "name": "Tridente Místico",
+        "icon": "trident",
+        "odd": 4.0,
+        "qty": "15"
+      },
+      {
+        "name": "Bastão LvL 5",
+        "icon": "mace",
+        "odd": 5.0,
+        "qty": "1"
+      },
+      {
+        "name": "70M Rubi",
+        "icon": "redstone",
+        "odd": 5.5,
+        "qty": "70M"
+      },
+      {
+        "name": "660Q Tokens",
+        "icon": "horn_coral",
+        "odd": 6.0,
+        "qty": "660Q"
+      },
+      {
+        "name": "Key Tempestade",
+        "icon": "heart_of_the_sea",
+        "odd": 7.0,
+        "qty": "2"
+      },
+      {
+        "name": "Machado de Ouro",
+        "icon": "golden_axe",
+        "odd": 10.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Armadura 6x 15min",
+        "icon": "water_bottle",
+        "odd": 15.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Tokens 2.5x 10min",
+        "icon": "trial_key",
+        "odd": 30.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Coins 2.7x 10min",
+        "icon": "sunflower",
+        "odd": 40.0,
+        "qty": "1"
+      },
+      {
+        "name": "360Q Tokens",
+        "icon": "horn_coral",
+        "odd": 60.0,
+        "qty": "360Q"
+      }
+    ]
+  },
+  {
+    "name": "Key Páscoa",
+    "icon": "rabbit_spawn_egg",
+    "items": [
+      {
+        "name": "Capacete do Trovão",
+        "icon": "diamond_helmet",
+        "odd": 0.05,
+        "qty": "1"
+      },
+      {
+        "name": "Skin Páscoa",
+        "icon": "netherite_pickaxe",
+        "odd": 0.1,
+        "qty": "1"
+      },
+      {
+        "name": "Vara de Pesca x3.5",
+        "icon": "fishing_rod",
+        "odd": 1.0,
+        "qty": "1"
+      },
+      {
+        "name": "Tridente Celestial",
+        "icon": "trident",
+        "odd": 4.0,
+        "qty": "2"
+      },
+      {
+        "name": "Bastão LvL 7",
+        "icon": "mace",
+        "odd": 5.0,
+        "qty": "1"
+      },
+      {
+        "name": "120M Rubi",
+        "icon": "redstone",
+        "odd": 5.5,
+        "qty": "120M"
+      },
+      {
+        "name": "860Q Tokens",
+        "icon": "horn_coral",
+        "odd": 6.0,
+        "qty": "860Q"
+      },
+      {
+        "name": "Key Páscoa",
+        "icon": "rabbit_spawn_egg",
+        "odd": 7.0,
+        "qty": "2"
+      },
+      {
+        "name": "Machado de Diamante",
+        "icon": "diamond_axe",
+        "odd": 10.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Armadura 7x 15min",
+        "icon": "water_bottle",
+        "odd": 15.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Tokens 2.7x 10min",
+        "icon": "trial_key",
+        "odd": 30.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Coins 2.9x 10min",
+        "icon": "sunflower",
+        "odd": 40.0,
+        "qty": "1"
+      },
+      {
+        "name": "760Q Tokens",
+        "icon": "horn_coral",
+        "odd": 60.0,
+        "qty": "760Q"
+      }
+    ]
+  },
+  {
+    "name": "Key SuperNova",
+    "icon": "nether_star",
+    "items": [
+      {
+        "name": "Skin SuperNova",
+        "icon": "netherite_pickaxe",
+        "odd": 0.09,
+        "qty": "1"
+      },
+      {
+        "name": "Vara de Pesca x4.0",
+        "icon": "fishing_rod",
+        "odd": 1.0,
+        "qty": "1"
+      },
+      {
+        "name": "Tridente Supremo",
+        "icon": "trident",
+        "odd": 4.0,
+        "qty": "2"
+      },
+      {
+        "name": "Bastão LvL 10",
+        "icon": "mace",
+        "odd": 5.0,
+        "qty": "1"
+      },
+      {
+        "name": "400M Rubi",
+        "icon": "redstone",
+        "odd": 5.5,
+        "qty": "400M"
+      },
+      {
+        "name": "50QQ Tokens",
+        "icon": "horn_coral",
+        "odd": 6.0,
+        "qty": "50QQ"
+      },
+      {
+        "name": "Key SuperNova",
+        "icon": "nether_star",
+        "odd": 7.0,
+        "qty": "2"
+      },
+      {
+        "name": "Quebra-Ossos",
+        "icon": "netherite_shovel",
+        "odd": 10.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Armadura 8x 15min",
+        "icon": "water_bottle",
+        "odd": 15.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Rubis 2x 15min",
+        "icon": "cactus_flower",
+        "odd": 25.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Tokens 3.0x 10min",
+        "icon": "trial_key",
+        "odd": 30.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Coins 3.2x 10min",
+        "icon": "sunflower",
+        "odd": 40.0,
+        "qty": "1"
+      },
+      {
+        "name": "20QQ Tokens",
+        "icon": "horn_coral",
+        "odd": 60.0,
+        "qty": "20QQ"
+      }
+    ]
+  },
+  {
+    "name": "Key Netuno",
+    "icon": "glow_ink_sac",
+    "items": [
+      {
+        "name": "Skin Poseidon",
+        "icon": "netherite_pickaxe",
+        "odd": 0.05,
+        "qty": "1"
+      },
+      {
+        "name": "Vara de Pesca x4.5",
+        "icon": "fishing_rod",
+        "odd": 1.0,
+        "qty": "1"
+      },
+      {
+        "name": "Tridente Supremo",
+        "icon": "trident",
+        "odd": 4.0,
+        "qty": "5"
+      },
+      {
+        "name": "Bastão LvL 11",
+        "icon": "mace",
+        "odd": 5.0,
+        "qty": "1"
+      },
+      {
+        "name": "1B Rubi",
+        "icon": "redstone",
+        "odd": 5.5,
+        "qty": "1B"
+      },
+      {
+        "name": "350QQ Tokens",
+        "icon": "horn_coral",
+        "odd": 6.0,
+        "qty": "350QQ"
+      },
+      {
+        "name": "Key Netuno",
+        "icon": "glow_ink_sac",
+        "odd": 7.0,
+        "qty": "2"
+      },
+      {
+        "name": "Abatedor",
+        "icon": "netherite_hoe",
+        "odd": 10.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Armadura 10x 15min",
+        "icon": "water_bottle",
+        "odd": 15.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Rubis 2.5x 15min",
+        "icon": "cactus_flower",
+        "odd": 25.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Tokens 3.3x 10min",
+        "icon": "trial_key",
+        "odd": 30.0,
+        "qty": "1"
+      },
+      {
+        "name": "Booster de Coins 3.5x 10min",
+        "icon": "sunflower",
+        "odd": 40.0,
+        "qty": "1"
+      },
+      {
+        "name": "200QQ Tokens",
+        "icon": "horn_coral",
+        "odd": 60.0,
+        "qty": "200QQ"
+      }
+    ]
+  }
+]
