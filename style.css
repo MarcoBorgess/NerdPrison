@@ -96,9 +96,7 @@ table {
 }
 
 thead th {
-  position: sticky;
-  top: 54px;
-  z-index: 2;
+  position: static;
   background: #16161e;
   text-align: left;
   color: #666;
@@ -325,9 +323,6 @@ td.brainrots-needed {
 /* ── Mobile: horizontal scroll ── */
 @media (max-width: 768px) {
   .content { padding: 16px 12px 0; }
-
-  /* sticky breaks inside overflow-x:auto containers */
-  thead th { position: static; }
 
   /* auto layout lets columns size to content (pills, values) instead of fixed %) */
   .brainrot-table  { table-layout: auto; min-width: 520px; }
