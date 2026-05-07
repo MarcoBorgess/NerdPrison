@@ -390,7 +390,7 @@ function mbRenderTable() {
       <td class="num qty-cell">
         <span class="qty-display">${qty}</span>
         <span class="qty-form hidden">
-          <input type="number" class="qty-input" value="${qty}" min="1">
+          <input type="number" class="qty-input" value="${qty}" min="0">
           <button class="qty-confirm">✓</button>
         </span>
       </td>
@@ -424,8 +424,12 @@ function mbRenderTable() {
     const idx = parseInt(row.dataset.idx);
     const inp = btn.closest('.qty-form').querySelector('.qty-input');
     const val = parseInt(inp.value);
-    if (!isNaN(val) && val >= 1) {
-      _mbLoadout[idx].qty = val;
+    if (!isNaN(val) && val >= 0) {
+      if (val === 0) {
+        _mbLoadout.splice(idx, 1);
+      } else {
+        _mbLoadout[idx].qty = val;
+      }
       mbSave(MB_LS.LOADOUT, _mbLoadout);
       mbRenderTable();
       mbRenderCards();
