@@ -67,6 +67,17 @@ h2 {
   font-weight: 400;
 }
 
+/* ── Table horizontal scroll wrapper ── */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a3a transparent;
+}
+.table-scroll::-webkit-scrollbar { height: 4px; }
+.table-scroll::-webkit-scrollbar-track { background: transparent; }
+.table-scroll::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 2px; }
+
 /* ── Card ── */
 .brainrots-card {
   background: #16161e;
@@ -116,7 +127,9 @@ tbody tr:last-child td { border-bottom: none; }
 tbody tr:hover td { background: #1a1a26; }
 
 /* ── Brainrot table: fixed layout for column alignment ── */
-.brainrot-table { table-layout: fixed; }
+.brainrot-table  { table-layout: fixed; min-width: 520px; }
+.rebirths-table  { min-width: 680px; }
+.porretes-table  { min-width: 420px; }
 
 .brainrot-table .col-name   { width: 38%; }
 .brainrot-table .col-rarity { width: 13%; }
@@ -312,16 +325,6 @@ td.brainrots-needed {
 /* ── Mobile: horizontal scroll ── */
 @media (max-width: 768px) {
   .content { padding: 16px 12px 0; }
-
-  .table-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: #2a2a3a transparent;
-  }
-  .table-scroll::-webkit-scrollbar { height: 4px; }
-  .table-scroll::-webkit-scrollbar-track { background: transparent; }
-  .table-scroll::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 2px; }
 
   /* sticky breaks inside overflow-x:auto containers */
   thead th { position: static; }
