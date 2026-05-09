@@ -173,9 +173,15 @@ function renderBrainrotTable(wrapperId, data, state, currency) {
   });
 }
 
+function rubiSuffix(rubiAmt) {
+  if (!rubiAmt) return '';
+  return ` <span class="rubi-plus">+</span> <span class="rubi-val">${fmt(rubiAmt)}</span>`;
+}
+
 function renderRebirths(data) {
   const wrap = document.getElementById('rebirths-table-wrap');
   let cumulative = 0;
+  let rubiCumulative = 0;
 
   let html = `<div class="brainrots-card"><div class="table-scroll"><table class="rebirths-table"><thead><tr>
     <th>Nível</th>
@@ -189,16 +195,18 @@ function renderRebirths(data) {
   </tr></thead><tbody>`;
 
   for (const r of data) {
+    const rubiCost = r.costOfNeededBrainrotsRubi || 0;
     const total = r.cost + r.costOfNeededBrainrots;
     cumulative += total;
+    rubiCumulative += rubiCost;
     html += `<tr>
       <td>${r.level}</td>
       <td class="num token-val">x${r.tokensMultiplier.toFixed(1)}</td>
       <td class="num green-val">x${r.coinsMultiplier.toFixed(1)}</td>
       <td class="num muted-val">${fmt(r.cost)}</td>
-      <td class="num muted-val">${fmt(r.costOfNeededBrainrots)}</td>
-      <td class="num green-val">${fmt(total)}</td>
-      <td class="num dark-green-val">${fmt(cumulative)}</td>
+      <td class="num muted-val">${fmt(r.costOfNeededBrainrots)}${rubiSuffix(rubiCost)}</td>
+      <td class="num green-val">${fmt(total)}${rubiSuffix(rubiCost)}</td>
+      <td class="num dark-green-val">${fmt(cumulative)}${rubiSuffix(rubiCumulative)}</td>
       <td class="brainrots-needed">${r.neededBrainrots.replace(/\n/g, '<br>')}</td>
     </tr>`;
   }
@@ -363,7 +371,7 @@ function mbRenderCards() {
     mbRenderTable();
   });
   document.getElementById('mb-inc').addEventListener('click', () => {
-    _mbLevel = Math.min(20, _mbLevel + 1);
+    _mbLevel = Math.min(25, _mbLevel + 1);
     mbSave(MB_LS.REBIRTH, _mbLevel);
     mbRenderCards();
     mbRenderTable();

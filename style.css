@@ -143,6 +143,7 @@ tbody tr:hover td { background: #1a1a26; }
 .coin-val  { color: #3a9bd5; }
 .token-val { color: #f0c040; }
 .rubi-val       { color: #FF5555; }
+.rubi-plus      { color: #555; }
 .rubi-event-val { color: #CC3333; }
 .green-val      { color: #2ecc71; }
 .dark-green-val { color: #1a8a4a; }
