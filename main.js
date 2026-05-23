@@ -193,14 +193,11 @@ function openEsteiraModal(buyValue, name) {
   document.getElementById('esteira-modal-title').textContent = `Esteira — ${name}`;
   const tbody = document.getElementById('esteira-tbody');
   let html = '';
-  let cumulative = 0;
   for (let i = 0; i < 10; i++) {
     const cost = buyValue * Math.pow(1.5, i);
-    cumulative += cost;
     html += `<tr>
       <td class="esteira-click-num">${i + 1}º clique</td>
       <td class="num esteira-cost-val">${fmt(cost)}</td>
-      <td class="num esteira-total-val">${fmt(cumulative)}</td>
     </tr>`;
   }
   tbody.innerHTML = html;

@@ -1489,6 +1489,3 @@ tfoot .pesca-total-row td {
 .esteira-table .num { text-align: right; }
 .esteira-click-num { color: #888; font-size: 0.85rem; }
 .esteira-cost-val  { color: #2ecc71; font-weight: 600; }
-.esteira-total-val { color: #888; font-size: 0.82rem; }
-.esteira-table tbody tr:last-child .esteira-cost-val  { color: #f0c040; }
-.esteira-table tbody tr:last-child .esteira-total-val { color: #f0c040; font-weight: 600; font-size: 0.9rem; }
