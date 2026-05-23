@@ -420,6 +420,29 @@
     </div>
   </div>
 
+  <!-- Esteira cost modal -->
+  <div class="modal-overlay" id="esteira-modal">
+    <div class="modal-box esteira-modal-box">
+      <div class="modal-title">
+        <span id="esteira-modal-title">Custo na Esteira</span>
+        <button class="modal-close" id="esteira-modal-close">✕</button>
+      </div>
+      <p class="modal-sub" style="margin-bottom:14px;margin-top:-8px;">Cada clique custa 50% a mais que o anterior</p>
+      <div class="table-scroll">
+        <table class="esteira-table">
+          <thead>
+            <tr>
+              <th>Clique</th>
+              <th class="num">Custo</th>
+              <th class="num">Total Acumulado</th>
+            </tr>
+          </thead>
+          <tbody id="esteira-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <script src="main.js"></script>
 </body>
 </html>

@@ -1434,3 +1434,61 @@ tfoot .pesca-total-row td {
 @media (max-width: 600px) {
   .cc-grid { flex-direction: column; }
 }
+
+/* ── Esteira cost modal ── */
+.cost-clickable {
+  cursor: pointer;
+  border-bottom: 1px dashed #444;
+  transition: border-bottom-color 0.15s;
+}
+.cost-clickable:hover { border-bottom-color: #888; }
+
+.cost-info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #2a2a3a;
+  color: #888;
+  font-size: 0.6rem;
+  font-style: italic;
+  font-weight: 700;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 5px;
+  border: none;
+  transition: background 0.15s, color 0.15s;
+}
+.cost-info-btn:hover { background: #3a3a4a; color: #e0e0e0; }
+
+.esteira-modal-box { width: 380px; }
+
+.esteira-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.esteira-table th {
+  text-align: left;
+  color: #666;
+  font-size: 0.75rem;
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid #2a2a3a;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.esteira-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid #1e1e2e;
+}
+.esteira-table tbody tr:last-child td { border-bottom: none; }
+.esteira-table tbody tr:hover { background: #1a1a26; }
+.esteira-table .num { text-align: right; }
+.esteira-click-num { color: #888; font-size: 0.85rem; }
+.esteira-cost-val  { color: #2ecc71; font-weight: 600; }
+.esteira-total-val { color: #888; font-size: 0.82rem; }
+.esteira-table tbody tr:last-child .esteira-cost-val  { color: #f0c040; }
+.esteira-table tbody tr:last-child .esteira-total-val { color: #f0c040; font-weight: 600; font-size: 0.9rem; }

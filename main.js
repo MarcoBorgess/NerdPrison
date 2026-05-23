@@ -152,7 +152,7 @@ function renderBrainrotTable(wrapperId, data, state, currency) {
       <td class="td-name">${mobFace(b.icon)}<span class="brainrot-name">${b.name}</span></td>
       <td>${rarityPill(b.rarity)}</td>
       <td class="num muted-val">${b.valuePerSec ? fmt(b.valuePerSec) : '—'}</td>
-      <td class="num ${costCls}">${fmt(b.buyValue)}</td>
+      <td class="num ${costCls}"><span class="cost-clickable" data-buy="${b.buyValue}" data-name="${b.name}">${fmt(b.buyValue)}</span><button class="cost-info-btn" data-buy="${b.buyValue}" data-name="${b.name}" title="Custo na esteira">i</button></td>
       <td class="num">${beFmt(b)}</td>
     </tr>`;
   }
@@ -179,6 +179,32 @@ function renderBrainrotTable(wrapperId, data, state, currency) {
   wrap.querySelectorAll('.info-icon').forEach(el => {
     el.addEventListener('click', e => e.stopPropagation());
   });
+
+  wrap.querySelectorAll('.cost-clickable, .cost-info-btn').forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      openEsteiraModal(parseFloat(el.dataset.buy), el.dataset.name);
+    });
+  });
+}
+
+function openEsteiraModal(buyValue, name) {
+  const modal = document.getElementById('esteira-modal');
+  document.getElementById('esteira-modal-title').textContent = `Esteira — ${name}`;
+  const tbody = document.getElementById('esteira-tbody');
+  let html = '';
+  let cumulative = 0;
+  for (let i = 0; i < 10; i++) {
+    const cost = buyValue * Math.pow(1.5, i);
+    cumulative += cost;
+    html += `<tr>
+      <td class="esteira-click-num">${i + 1}º clique</td>
+      <td class="num esteira-cost-val">${fmt(cost)}</td>
+      <td class="num esteira-total-val">${fmt(cumulative)}</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+  modal.classList.add('open');
 }
 
 function rubiSuffix(rubiAmt) {
@@ -1666,9 +1692,14 @@ async function init() {
   closeBtn.addEventListener('click', () => tipModal.classList.remove('open'));
   tipModal.addEventListener('click', e => { if (e.target === tipModal) tipModal.classList.remove('open'); });
 
+  const esteiraModal = document.getElementById('esteira-modal');
+  document.getElementById('esteira-modal-close').addEventListener('click', () => esteiraModal.classList.remove('open'));
+  esteiraModal.addEventListener('click', e => { if (e.target === esteiraModal) esteiraModal.classList.remove('open'); });
+
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     tipModal.classList.remove('open');
+    esteiraModal.classList.remove('open');
     document.getElementById('mb-modal').classList.remove('open');
     document.getElementById('chaves-modal').classList.remove('open');
     document.getElementById('chaves-info-modal').classList.remove('open');
