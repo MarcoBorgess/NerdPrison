@@ -190,14 +190,14 @@ function renderBrainrotTable(wrapperId, data, state, currency) {
 
 function openEsteiraModal(buyValue, name) {
   const modal = document.getElementById('esteira-modal');
-  document.getElementById('esteira-modal-title').textContent = `Esteira — ${name}`;
+  document.getElementById('esteira-modal-title').textContent = name;
   const tbody = document.getElementById('esteira-tbody');
   let html = '';
   for (let i = 0; i < 10; i++) {
     const cost = buyValue * Math.pow(1.5, i);
     html += `<tr>
       <td class="esteira-click-num">${i + 1}º clique</td>
-      <td class="num esteira-cost-val">${fmt(cost)}</td>
+      <td class="num esteira-cost-val">${fmt2(cost)}</td>
     </tr>`;
   }
   tbody.innerHTML = html;

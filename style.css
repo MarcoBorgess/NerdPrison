@@ -1438,10 +1438,7 @@ tfoot .pesca-total-row td {
 /* ── Esteira cost modal ── */
 .cost-clickable {
   cursor: pointer;
-  border-bottom: 1px dashed #444;
-  transition: border-bottom-color 0.15s;
 }
-.cost-clickable:hover { border-bottom-color: #888; }
 
 .cost-info-btn {
   display: inline-flex;
@@ -1464,6 +1461,7 @@ tfoot .pesca-total-row td {
 .cost-info-btn:hover { background: #3a3a4a; color: #e0e0e0; }
 
 .esteira-modal-box { width: 380px; }
+.esteira-desc { font-size: 0.75rem; color: #666; margin-bottom: 14px; margin-top: -6px; }
 
 .esteira-table {
   width: 100%;
