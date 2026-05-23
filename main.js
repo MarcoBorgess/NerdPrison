@@ -381,6 +381,7 @@ function renderPorretes(data) {
     <th>Item</th>
     <th>Mob ♥ HP ⚔ Hits</th>
     <th class="num">Dano</th>
+    <th class="num">Rubi Base</th>
     <th class="num">Equiv. Nível 1</th>
     <th class="num">Qtd</th>
     <th class="num">Tokens / 1</th>
@@ -390,7 +391,9 @@ function renderPorretes(data) {
   </tr></thead><tbody>`;
 
   let tT = 0, tC = 0, hT = false, hC = false;
-  for (const p of data) {
+  for (let i = 0; i < data.length; i++) {
+    const p    = data[i];
+    const prev = data[i - 1];
     const q    = qty[p.level] || 0;
     const tokV = saved.tokensBase != null ? saved.tokensBase * p.level1Equivalents : null;
     const coiV = saved.coinsBase  != null ? saved.coinsBase  * p.level1Equivalents : null;
@@ -402,6 +405,7 @@ function renderPorretes(data) {
       <td class="td-name">${mcImg(p.icon)}<span class="brainrot-name">${p.level} - ${p.name}</span></td>
       <td>${p.mob ? `${p.mob}${p.hp != null ? ` <span class="hp-tag">♥ ${p.hp}</span>` : ''}${p.hp != null && p.damage != null ? ` <span class="hits-tag">⚔ ${Math.ceil(p.hp / p.damage)} Hits</span>` : ''}` : '—'}</td>
       <td class="num">${p.damage ?? '—'}</td>
+      <td class="num rubi-val">${p.rubiBase != null ? fmt2(p.rubiBase) + (prev?.rubiBase != null ? ` <span class="rubi-pct">(+${((p.rubiBase / prev.rubiBase - 1) * 100).toFixed(0)}%)</span>` : '') : '—'}</td>
       <td class="num">${fmtFull(p.level1Equivalents)}</td>
       <td class="num"><input type="number" class="qty-input pr-qty-input" data-level="${p.level}" value="${q}" min="0"></td>
       <td class="num"><input type="text" class="ch-val-input pr-tok-input" data-level="${p.level}" value="${tokV != null ? fmtBig(tokV) : ''}" placeholder="—"></td>
@@ -412,7 +416,7 @@ function renderPorretes(data) {
   }
 
   html += `</tbody><tfoot><tr class="chaves-total-row">
-    <td colspan="7" style="color:#666;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;padding:10px 16px">Total Geral</td>
+    <td colspan="8" style="color:#666;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em;padding:10px 16px">Total Geral</td>
     <td class="num token-val" id="pr-footer-t">${hT ? fmtBig(tT) : '—'}</td>
     <td class="num green-val"  id="pr-footer-c">${hC ? fmtBig(tC) : '—'}</td>
   </tr></tfoot></table></div></div>`;
