@@ -730,6 +730,12 @@
         "qty": "1"
       },
       {
+        "name": "Impulso de Raridade MÍTICO 4% (1m40s)",
+        "icon": "purple_candle",
+        "odd": 3.0,
+        "qty": "1"
+      },
+      {
         "name": "Tridente Supremo",
         "icon": "trident",
         "odd": 4.0,
